@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.agents/
+.codex/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+work/
+*.py[cod]
+storage/*.sqlite*
+workspace/*
+!workspace/.gitkeep

@@ -4,7 +4,7 @@
 
 googii 基于 **FastAPI + LangGraph + MCP + Docker** 构建。它把模型推理、工具调用、会话状态和上下文管理组织为一个 Python 服务，通过 HTTP API 与 SSE 连接应用、网关或自定义前端。
 
-适用于代码智能体原型开发、项目维护助手及应用集成。当前采用单进程服务和 SQLite checkpoint 的轻量架构，可独立调用，也可接入 GopherAI v1 网关。
+适用于代码智能体原型开发、项目维护助手及应用集成。当前采用单进程服务和 SQLite checkpoint 的轻量架构，可独立调用，也可接入自定义应用网关。
 
 ## 目录
 
@@ -42,7 +42,7 @@ googii 基于 **FastAPI + LangGraph + MCP + Docker** 构建。它把模型推理
 ## 架构与执行流程
 
 ```text
-客户端 / GopherAI 网关 / 自定义前端
+客户端 / 应用网关 / 自定义前端
                   │ HTTP + SSE
                   ▼
             FastAPI API 层
@@ -422,12 +422,6 @@ python -m ruff check .
 现有测试涉及 API 启动及路径校验、上下文组装、事件回放、文件操作、审批策略、工具结果处理和部分 Docker 管理行为，不替代真实模型与 Docker 的端到端验证。
 
 新增工具可在对应 MCP Server 中注册函数，客户端初始化时发现并提供给模型。涉及新副作用时，应同步检查审批策略、事件字段和工作区边界。
-
-### GopherAI 集成
-
-将 GopherAI 网关的 Agent 地址指向本服务，并转发 SSE、取消请求与审批决策，即可接入 `/api/v1` 协议。其他客户端也可直接调用。
-
-GopherAI 的 Go 网关、Vue 前端和 RabbitMQ 生命周期消息逻辑不在本仓库内。本服务当前不依赖 RabbitMQ、Redis 或 MySQL。
 
 ## 常见问题
 
